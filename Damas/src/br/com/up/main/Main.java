@@ -11,13 +11,10 @@ public class Main {
 
     // variables for the class
 
-    int first = 0; // is the main variable for determining if i's the first time a class is called,
-                   // as well as main
-    ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here, every piece has it's position for the
-                                                  // board to render later
+    int first = 0; // is the main variable for determining if i's the first time a class is called, as well as main
+    ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here, every piece has it's position for the board to render later
     int color;
     Pieces new_piece;
-
     if (first == 0) {
 
       Welcome();
