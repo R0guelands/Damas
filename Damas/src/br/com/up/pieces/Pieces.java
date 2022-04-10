@@ -4,21 +4,22 @@ public class Pieces {
 
     //variables for the class
     
-    int color; //0 for black, 1 for white
+    char color; //0 for black, 1 for white
     int x; //x position og the given piece
     int y; //y position og the given piece
 
-    public Pieces (int color, int x, int y){
+    public Pieces (char color, int x, int y){
         this.color = color;
         this.x = x;
         this.y = y;
     }
 
-    public int getColor() {
+
+    public char getColor() {
         return this.color;
     }
 
-    public void setColor(int color) {
+    public void setColor(char color) {
         this.color = color;
     }
 
@@ -37,5 +38,6 @@ public class Pieces {
     public void setY(int y) {
         this.y = y;
     }
+
 
 }
