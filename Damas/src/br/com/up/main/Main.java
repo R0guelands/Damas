@@ -14,50 +14,88 @@ public class Main {
 
     int first = 0; // is the variable for determining if i's the first time a class is called
     int nextPlayer = 0;
+    int moveX, moveY, moveXX, moveYY;
+    char original;
+    int diff;
+    int surrounding;
     ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here
     BoardPrint BoardPrint = new BoardPrint();
     Scanner scanner = new Scanner(System.in);
-    char[] color = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-        'I', 'J', 'K', 'L' };
 
-    char move;
+    // welcome message and generating the initial pieces
 
     if (first == 0) {
 
       Welcome();
-      GeneratePieces(pieces, color);
+      GeneratePieces(pieces);
 
       first = 1;
 
     }
 
+    // main loop of the game
+
     while (Black(pieces) > 0 | White(pieces) > 0) {
+
+      // the score and the next player indication
 
       System.out.printf("\nScore -> Black: %d | White: %d\n", Black(pieces), White(pieces));
 
       if (nextPlayer % 2 == 0) {
 
-        System.out.println("\nNext Player -> BLACK (upper case)");
+        System.out.println("\nNext Player -> BLACK (X)");
 
       } else {
 
-        System.out.println("\nNext Player -> WHITE (lowwer case)");
+        System.out.println("\nNext Player -> WHITE (O)");
 
       }
 
       BoardPrint.Show(pieces);
 
-      System.out.println("Select the piece you want to move: (ex 'a')");
+      // asking and validating the line of what piece to move
+
+      System.out.println("\n\nPlease select the line of the piece you want to move!");
 
       outer: while (true) {
 
-        move = scanner.next().charAt(0);
+        surrounding = 0;
 
-        for (int i = 0; i < color.length; i ++) {
+        moveX = scanner.nextInt();
+
+        outer2: for (Pieces piece : pieces) {
 
           if (nextPlayer % 2 == 0) {
 
-            if (move == color[i] & Character.isUpperCase(color[i]) == true ) {
+            if (moveX == piece.getX() & piece.getX() < 3) {
+
+              for (Pieces piece2 : pieces) {
+
+                if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+
+                  surrounding += 1;
+
+                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
+
+                  surrounding += 1;
+
+                } else if (piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY() & piece.getX() + 1 > 8 & piece.getY() - 1 < 0) {
+
+                  surrounding += 1;
+
+                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY() & piece.getX() - 1 < 0 & piece.getY() + 1 > 8) {
+
+                  surrounding += 1;
+
+                }
+
+                if (surrounding > 3) {
+
+                  break outer2;
+
+                }
+
+              }
 
               break outer;
 
@@ -65,7 +103,35 @@ public class Main {
 
           } else {
 
-            if (move == color[i] & Character.isLowerCase(color[i]) == true ) {
+            if (moveX == piece.getX() & piece.getX() > 4) {
+
+              for (Pieces piece2 : pieces) {
+
+                if (piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) {
+
+                  surrounding += 1;
+
+                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) {
+
+                  surrounding += 1;
+
+                } else if (piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) {
+
+                  surrounding += 1;
+
+                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) {
+
+                  surrounding += 1;
+
+                }
+
+                if (surrounding > 3) {
+
+                  break outer2;
+
+                }
+
+              }
 
               break outer;
 
@@ -75,11 +141,50 @@ public class Main {
 
         }
 
-        System.out.println("Please select a valid piece.");
+        System.out.println("Invalid line! Please select another.");
 
       }
 
+      // asking and validating the column of what piece to move and then showing the
+      // board
 
+      System.out.println("\n\nPlease select the column of the piece you want to move!");
+
+      outer: while (true) {
+
+        moveY = scanner.nextInt();
+
+        for (Pieces piece : pieces) {
+
+          if (moveY == piece.getY() & moveX == piece.getX()) {
+
+            original = piece.getColor();
+
+            piece.setColor('S');
+
+            BoardPrint.Show(pieces);
+
+            piece.setColor(original);
+
+            break outer;
+
+          }
+
+        }
+
+        System.out.println("Invalid column! Please select another.");
+
+      }
+
+      // mentioning that the selected piece is now 'S'
+
+      System.out.println("\nNow that you selected a piece, it's marked as 'S' in the board!");
+
+      // asking and validating the line of where to move the piece
+
+      System.out.println("\n\nPlease select the line of where to move your piece");
+
+      nextPlayer += 1;
 
       break;
 
@@ -93,7 +198,7 @@ public class Main {
 
     for (Pieces piece : pieces) {
 
-      if (Character.isUpperCase(piece.getColor())) {
+      if (piece.getColor() == 'X') {
 
         black += 1;
 
@@ -111,7 +216,7 @@ public class Main {
 
     for (Pieces piece : pieces) {
 
-      if (Character.isLowerCase(piece.getColor())) {
+      if (piece.getColor() == 'O') {
 
         white += 1;
 
@@ -132,12 +237,22 @@ public class Main {
 
   }
 
-  private static ArrayList<Pieces> GeneratePieces(ArrayList<Pieces> pieces, char[] color) {
+  private static ArrayList<Pieces> GeneratePieces(ArrayList<Pieces> pieces) {
 
-    int index = 0;
+    char color;
     Pieces new_piece;
 
     for (int x = 0; x <= 7; x++) {
+
+      if (x < 3) {
+
+        color = 'X';
+
+      } else {
+
+        color = 'O';
+
+      }
 
       if (x < 3 | x > 4) {
 
@@ -147,8 +262,7 @@ public class Main {
 
             if (y % 2 == 0) {
 
-              new_piece = new Pieces(color[index], x, y);
-              index += 1;
+              new_piece = new Pieces(color, x, y);
               pieces.add(new_piece);
 
             }
@@ -157,8 +271,7 @@ public class Main {
 
             if (y % 2 != 0) {
 
-              new_piece = new Pieces(color[index], x, y);
-              index += 1;
+              new_piece = new Pieces(color, x, y);
               pieces.add(new_piece);
 
             }
