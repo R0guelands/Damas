@@ -71,19 +71,23 @@ public class Main {
 
               for (Pieces piece2 : pieces) {
 
-                if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+                if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                    | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
 
                   surrounding += 1;
 
-                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
+                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                    | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
 
                   surrounding += 1;
 
-                } else if (piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY() & piece.getX() + 1 > 8 & piece.getY() - 1 < 0) {
+                } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                    | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
 
                   surrounding += 1;
 
-                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY() & piece.getX() - 1 < 0 & piece.getY() + 1 > 8) {
+                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                    | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
 
                   surrounding += 1;
 
@@ -107,19 +111,23 @@ public class Main {
 
               for (Pieces piece2 : pieces) {
 
-                if (piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) {
+                if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                    | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
 
                   surrounding += 1;
 
-                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) {
+                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                    | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
 
                   surrounding += 1;
 
-                } else if (piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY()) {
+                } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                    | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
 
                   surrounding += 1;
 
-                } else if (piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY()) {
+                } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                    | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
 
                   surrounding += 1;
 
@@ -154,9 +162,43 @@ public class Main {
 
         moveY = scanner.nextInt();
 
-        for (Pieces piece : pieces) {
+        surrounding = 0;
+
+        outer2: for (Pieces piece : pieces) {
 
           if (moveY == piece.getY() & moveX == piece.getX()) {
+
+            for (Pieces piece2 : pieces) {
+
+              if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                  | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+
+                surrounding += 1;
+
+              } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                  | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
+
+                surrounding += 1;
+
+              } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
+                  | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
+
+                surrounding += 1;
+
+              } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
+                  | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
+
+                surrounding += 1;
+
+              }
+
+              if (surrounding > 3) {
+
+                break outer2;
+
+              }
+
+            }
 
             original = piece.getColor();
 
@@ -183,6 +225,8 @@ public class Main {
       // asking and validating the line of where to move the piece
 
       System.out.println("\n\nPlease select the line of where to move your piece");
+
+      
 
       nextPlayer += 1;
 
