@@ -63,10 +63,6 @@ public class Board {
 
                         aux2 += 1;
 
-                    } else if (line + 1 > 7 && column + 1 > 7) {
-
-                        aux2 += 1;
-
                     }
                     
                 } else if ((line + 1 == piece.getX() && column - 1 == piece.getY()) || (line + 1 > 7 && column - 1 < 0)) {
@@ -79,12 +75,7 @@ public class Board {
 
                         aux2 += 1;
 
-                    } else if (line + 1 > 7 && column - 1 < 0) {
-
-                        aux2 += 1;
-
-                    }
-
+                    } 
 
                 } else if ((line - 1 == piece.getX() && column -1 == piece.getY()) || (line - 1 < 0 && column - 1 < 0)) {
 
@@ -96,11 +87,7 @@ public class Board {
 
                         aux2 += 1;
 
-                    } else if (line - 1 < 0 && column - 1 < 0) {
-
-                        aux2 += 1;
-
-                    }
+                    } 
 
                 } else if ((line - 1 == piece.getX() && column + 1 == piece.getY()) || (line - 1 < 0 && column + 1 > 7)) {
 
@@ -109,10 +96,6 @@ public class Board {
                         aux2 += 1;
                         
                     } else if (nextPLayer == 2 && line - 1 == piece.getX() && column + 1 == piece.getY() && piece.getColor() == 'O') {
-
-                        aux2 += 1;
-
-                    } else if (line - 1 < 0 && column + 1 > 7) {
 
                         aux2 += 1;
 
