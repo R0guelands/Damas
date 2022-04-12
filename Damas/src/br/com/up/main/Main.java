@@ -14,6 +14,8 @@ public class Main {
 
     int nextPlayer = 0;
 
+    int rounds = 0;
+
     ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here
 
     Board board = new Board();
@@ -29,6 +31,8 @@ public class Main {
     // main loop of the game
 
     while (true) {
+
+      System.out.printf("------------%d------------\n", rounds);
 
       Score(pieces);
 
@@ -47,6 +51,8 @@ public class Main {
       boardPrint.PrintBoard(pieces);
 
       pieces = board.BoardLogic(pieces, nextPlayer);
+
+      rounds += 1;
 
     }
 
