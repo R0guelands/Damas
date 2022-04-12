@@ -1,7 +1,6 @@
 package br.com.up.main;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import br.com.up.board.Board;
 import br.com.up.board.BoardPrint;
@@ -13,36 +12,69 @@ public class Main {
 
     // variables for the class
 
-    int first = 0; // is the variable for determining if i's the first time a class is called
+    int nextPlayer = 0;
 
     ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here
 
     Board board = new Board();
 
+    BoardPrint boardPrint = new BoardPrint();
+
 
     // welcome message and generating the initial pieces
 
-    if (first == 0) {
-
-      Welcome();
-      GeneratePieces(pieces);
-
-      first = 1;
-
-    }
+    Welcome();
+    GeneratePieces(pieces);
 
     // main loop of the game
 
     while (true) {
 
-      pieces = board.BoardLogic(pieces);
+      Score(pieces);
 
-      break;
+      nextPlayer = NextPlayer(nextPlayer);
+
+      if (nextPlayer == 1) {
+
+        System.out.println("\n\nPlayer 1 (X), it's your turn!");
+
+      } else {
+
+        System.out.println("\n\nPlayer 2 (O), it's your turn!");
+
+      }
+
+      boardPrint.PrintBoard(pieces);
+
+      pieces = board.BoardLogic(pieces, nextPlayer);
 
     }
 
   }
 
+  public static int NextPlayer(int nextPlayer) {
+
+    if (nextPlayer % 2 == 0) {
+
+        nextPlayer = 1;
+
+    } else {
+
+        nextPlayer = 2;
+
+    }
+
+    return nextPlayer;
+
+  }
+
+  private static void Score(ArrayList<Pieces> pieces) {
+
+    Board board = new Board();
+
+    System.out.printf("\n\nScore: Black -> %d | White -> %d\n\n", board.Black(pieces), board.White(pieces));
+
+  }
 
   private static void Welcome() {
 

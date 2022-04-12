@@ -6,7 +6,7 @@ import br.com.up.pieces.Pieces;
 
 public class BoardPrint {
 
-    public void Show(ArrayList<Pieces> pieces) {
+    public void PrintBoard(ArrayList<Pieces> pieces) {
 
         int aux = 0;
 

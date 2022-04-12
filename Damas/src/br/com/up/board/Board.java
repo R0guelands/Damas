@@ -7,117 +7,89 @@ import br.com.up.pieces.Pieces;
 
 public class Board {
 
-    public ArrayList<Pieces> BoardLogic(ArrayList<Pieces> pieces) {
+    public ArrayList<Pieces> BoardLogic(ArrayList<Pieces> pieces, int nextPLayer) {
 
-        int nextPlayer = 0;
-        int moveX, moveY, moveXX, moveYY;
-        char original;
+        // Initializing systems
+
+        Scanner input = new Scanner(System.in);
+
+        BoardPrint boardPrint = new BoardPrint();
+
+        // varibal for the class
+
+        char aux;
+        int aux2;
         int diff;
-        int surrounding;
-        BoardPrint BoardPrint = new BoardPrint();
-        Scanner scanner = new Scanner(System.in);
+        int line, column, line2, column2;
 
-        System.out.printf("\nScore -> Black: %d | White: %d\n", Black(pieces), White(pieces));
+        // main logic
 
-        if (nextPlayer % 2 == 0) {
-
-            System.out.println("\nNext Player -> BLACK (X)");
-
-        } else {
-
-            System.out.println("\nNext Player -> WHITE (O)");
-
-        }
-
-        BoardPrint.Show(pieces);
-
-        // asking and validating the line of what piece to move
-
-        System.out.println("\n\nPlease select the line of the piece you want to move!");
+        System.out.println("\n\nSelect the line and the column of the piece you want to move:");
 
         outer: while (true) {
 
-            surrounding = 0;
+            line = input.nextInt();
 
-            moveX = scanner.nextInt();
+            column = input.nextInt();
 
-            outer2: for (Pieces piece : pieces) {
+            aux2 = 0;
 
-                if (nextPlayer % 2 == 0) {
 
-                    if (moveX == piece.getX() & piece.getX() < 3) {
+            for (Pieces piece: pieces) {
 
-                        for (Pieces piece2 : pieces) {
+                if (nextPLayer == 1 && piece.getColor() == 'O' && piece.getX() == line && piece.getY() == column) {
 
-                            if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                    | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+                    System.out.println("\n\nInvalid move, try again!");
 
-                                surrounding += 1;
+                    continue outer;
 
-                            } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                    | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
+                } else if (nextPLayer == 2 && piece.getColor() == 'X' && piece.getX() == line && piece.getY() == column) {
 
-                                surrounding += 1;
+                    System.out.println("\n\nInvalid move, try again!");
 
-                            } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                    | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
+                    continue outer;
 
-                                surrounding += 1;
+                }
 
-                            } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                    | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
+                if ((line + 1 == piece.getX() && column + 1 == piece.getY()) || (line + 1 > 7 && column + 1 > 7)) {
 
-                                surrounding += 1;
+                    aux2 += 1;
 
-                            }
+                } else if ((line + 1 == piece.getX() && column - 1 == piece.getY()) || (line + 1 > 7 && column - 1 < 0)) {
 
-                            if (surrounding > 3) {
+                    aux2 += 1;
 
-                                break outer2;
+                } else if ((line - 1 == piece.getX() && column -1 == piece.getY()) || (line - 1 < 0 && column - 1 < 0)) {
 
-                            }
+                    aux2 += 1;
 
-                        }
+                } else if ((line - 1 == piece.getX() && column + 1 == piece.getY()) || (line - 1 < 0 && column + 1 > 7)) {
 
-                        break outer;
+                    aux2 += 1;
 
-                    }
+                }
 
-                } else {
+            }
 
-                    if (moveX == piece.getX() & piece.getX() > 4) {
+            if (aux2 > 3) {
 
-                        for (Pieces piece2 : pieces) {
+                System.out.println("\n\nInvalid position, try again!");
 
-                            if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                    | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+                continue outer;
 
-                                surrounding += 1;
+            } else {
 
-                            } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                    | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
+                for (Pieces piece : pieces) {
 
-                                surrounding += 1;
+                    if (piece.getX() == line && piece.getY() == column) {
 
-                            } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                    | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
+                        aux = piece.getColor();
 
-                                surrounding += 1;
+                        piece.setColor('S');
 
-                            } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                    | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
+                        boardPrint.PrintBoard(pieces);
 
-                                surrounding += 1;
-
-                            }
-
-                            if (surrounding > 3) {
-
-                                break outer2;
-
-                            }
-
-                        }
+                        piece.setColor(aux);
 
                         break outer;
 
@@ -125,126 +97,103 @@ public class Board {
 
                 }
 
-            }
+                System.out.println("\n\nInvalid position, try again!");
 
-            System.out.println("Invalid line! Please select another.");
+                continue outer;
+
+            }
 
         }
 
-        // asking and validating the column of what piece to move and then showing the
-        // board
-
-        System.out.println("\n\nPlease select the column of the piece you want to move!");
+        System.out.println("\n\nNow, select the line and the column where you want to move the piece:");
 
         outer: while (true) {
 
-            moveY = scanner.nextInt();
+            line2 = input.nextInt();
 
-            surrounding = 0;
+            column2 = input.nextInt();
 
-            outer2: for (Pieces piece : pieces) {
+            diff = Math.abs((line + column) - (line2 + column2));
 
-                if (moveY == piece.getY() & moveX == piece.getX()) {
+            if (diff == 0 || diff == 2) {
+                
+                for (Pieces piece: pieces) {
 
-                    for (Pieces piece2 : pieces) {
+                    if (piece.getX() == line2 && piece.getY() == column2) {
 
-                        if ((piece.getX() + 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                | (piece.getX() + 1 > 8 & piece.getY() > 8)) {
+                        System.out.println("\n\nInvalid position, try again!");
 
-                            surrounding += 1;
-
-                        } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                | (piece.getX() - 1 < 0 & piece.getY() - 1 < 0)) {
-
-                            surrounding += 1;
-
-                        } else if ((piece.getX() + 1 == piece2.getX() & piece.getY() - 1 == piece2.getY())
-                                | (piece.getX() + 1 > 8 & piece.getY() - 1 < 0)) {
-
-                            surrounding += 1;
-
-                        } else if ((piece.getX() - 1 == piece2.getX() & piece.getY() + 1 == piece2.getY())
-                                | (piece.getX() - 1 < 0 & piece.getY() + 1 > 8)) {
-
-                            surrounding += 1;
-
-                        }
-
-                        if (surrounding > 3) {
-
-                            break outer2;
-
-                        }
+                        continue outer;
 
                     }
 
-                    original = piece.getColor();
+                }
 
-                    piece.setColor('S');
+                for (Pieces piece: pieces) {
 
-                    BoardPrint.Show(pieces);
+                    if (piece.getX() == line && piece.getY() == column) {
 
-                    piece.setColor(original);
+                        piece.setX(line2);
 
-                    break outer;
+                        piece.setY(column2);
+
+                        break;
+
+                    }
 
                 }
 
+                break outer;
+
+            } else {
+
+                System.out.println("\n\nInvalid position, try again!");
+
+                continue outer;
+
             }
 
-            System.out.println("Invalid column! Please select another.");
 
         }
-
-        // mentioning that the selected piece is now 'S'
-
-        System.out.println("\nNow that you selected a piece, it's marked as 'S' in the board!");
-
-        // asking and validating the line of where to move the piece
-
-        System.out.println("\n\nPlease select the line of where to move your piece");
-
-        nextPlayer += 1;
 
         return pieces;
 
-    
     }
 
-    private static int Black(ArrayList<Pieces> pieces) {
+    public int Black(ArrayList<Pieces> pieces) {
 
         int black = 0;
-    
+
         for (Pieces piece : pieces) {
-    
-          if (piece.getColor() == 'X') {
-    
-            black += 1;
-    
-          }
-    
+
+            if (piece.getColor() == 'X') {
+
+                black += 1;
+
+            }
+
         }
-    
+
         return black;
-    
-      }
-    
-      private static int White(ArrayList<Pieces> pieces) {
-    
+
+    }
+
+    public int White(ArrayList<Pieces> pieces) {
+
         int white = 0;
-    
+
         for (Pieces piece : pieces) {
-    
-          if (piece.getColor() == 'O') {
-    
-            white += 1;
-    
-          }
-    
+
+            if (piece.getColor() == 'O') {
+
+                white += 1;
+
+            }
+
         }
-    
+
         return white;
-    
-      }
+
+    }
 
 }
