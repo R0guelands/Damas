@@ -18,11 +18,13 @@ public class Board {
 
         Possibles possibles;
 
-        ArrayList<Possibles> possibleList = new ArrayList<Possibles>();
+        ArrayList<Pieces> piecesAux = new ArrayList<>();
 
-        ArrayList<Possibles> possibleListAux = new ArrayList<Possibles>();
+        ArrayList<Possibles> possibleList = new ArrayList<>();
 
-        ArrayList<Possibles> possibleListAux2 = new ArrayList<Possibles>();
+        ArrayList<Possibles> possibleListAux = new ArrayList<>();
+
+        ArrayList<Possibles> possibleListAux2 = new ArrayList<>();
 
         Pieces selection;
 
@@ -111,11 +113,7 @@ public class Board {
 
             }
 
-            possibleListAux2 = possibleList;
-
             for (Possibles option : possibleList) {
-
-                System.out.println(option);
 
                 for (Pieces piece : pieces) {
 
@@ -127,7 +125,7 @@ public class Board {
 
                     } else if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() != selection.getColor() && possibleListAux.contains(option) == false) {
 
-                        if ((piece.getX() + 1 > option.getX() && piece.getY() + 1 > option.getY()) && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
+                        if ((piece.getX() > selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
 
                             aux3 = 0;
 
@@ -157,7 +155,7 @@ public class Board {
 
                             //System.out.println("\n\nhi");
 
-                        } else if ((piece.getX() - 1 < option.getX() && piece.getY() - 1 < option.getY()) && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
+                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
 
                             aux3 = 0;
 
@@ -185,7 +183,7 @@ public class Board {
 
                             }
 
-                        } else if ((piece.getX() + 1 > option.getX() && piece.getY() - 1 < option.getY()) && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
+                        } else if ((piece.getX() + 1 > selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
 
                             aux3 = 0;
 
@@ -213,7 +211,7 @@ public class Board {
 
                             }
 
-                        } else if ((piece.getX() - 1 < option.getX() && piece.getY() + 1 > option.getY()) && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
+                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
 
                             aux3 = 0;
 
@@ -249,9 +247,15 @@ public class Board {
 
             }
 
-            System.out.println("\n\nPossible moves: " + aux2);
+            aux3 = 0;
 
-            possibleList = possibleListAux2;
+            for (Possibles item : possibleListAux2) {
+
+                possibleList.add(item);
+
+            }
+
+            System.out.println("\n\nPossible moves: " + aux2);
 
             if (aux2 == 0) {
 
@@ -324,8 +328,6 @@ public class Board {
 
                     } else if ((int) Math.abs(line - line2) == 2 && (int) Math.abs(column - column2) == 2) {
 
-                        System.out.println("\n\nhi");
-
                         lineAux = -1;
 
                         columnAux = -1;
@@ -356,23 +358,28 @@ public class Board {
 
                         for (Pieces piece: pieces) {
 
-                            if (piece.getX() == lineAux && piece.getY() == columnAux) {
-
-                                pieces.remove(piece);
-
-                            }
-
                             if (piece.getX() == line && piece.getY() == column) {
 
                                 piece.setX(line2);
                                 piece.setY(column2);
 
-                                break outer;
+                            }
+
+                            if (piece.getX() == lineAux && piece.getY() == columnAux) {
+
+                                piecesAux.add(piece);
 
                             }
 
                         }
 
+                        for (Pieces piece: piecesAux) {
+
+                            pieces.remove(piece);
+
+                        }
+
+                        break outer;
 
                     }
 
