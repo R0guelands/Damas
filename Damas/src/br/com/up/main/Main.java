@@ -12,7 +12,7 @@ public class Main {
 
     // variables for the class
 
-    int nextPlayer = 0;
+    int nextPlayer = 2;
 
     int rounds = 0;
 

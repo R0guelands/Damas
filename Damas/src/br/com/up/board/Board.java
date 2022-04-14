@@ -1,13 +1,14 @@
 package br.com.up.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import br.com.up.pieces.Pieces;
 
 public class Board {
 
-    public ArrayList<Pieces> BoardLogic(ArrayList<Pieces> pieces, int nextPLayer) {
+    public ArrayList<Pieces> BoardLogic(ArrayList<Pieces> pieces, int nextPlayer) {
 
         // Initializing systems
 
@@ -15,14 +16,22 @@ public class Board {
 
         BoardPrint boardPrint = new BoardPrint();
 
+        Possibles possibles;
+
+        ArrayList<Possibles> possibleList = new ArrayList<Possibles>();
+
+        ArrayList<Possibles> possibleListAux = new ArrayList<Possibles>();
+
+        Pieces selection;
+
         // varibal for the class
 
         char aux;
         int newLine;
         int newColumn;
-        int aux2;
+        int aux2, aux3;
         int diff;
-        int line, column, line2, column2;
+        int line, column, line2, column2, lineAux, columnAux;
 
         // main logic
 
@@ -36,269 +45,315 @@ public class Board {
 
             aux2 = 0;
 
+            if (line < 0 || line > 7 || column < 0 || column > 7) {
 
-            for (Pieces piece: pieces) {
-
-                if (nextPLayer == 1 && piece.getColor() == 'O' && piece.getX() == line && piece.getY() == column) {
-
-                    System.out.println("\n\nInvalid move, try again!");
-
-                    continue outer;
-
-                } else if (nextPLayer == 2 && piece.getColor() == 'X' && piece.getX() == line && piece.getY() == column) {
-
-                    System.out.println("\n\nInvalid move, try again!");
-
-                    continue outer;
-
-                }
-
-                if ((line + 1 == piece.getX() && column + 1 == piece.getY()) || (line + 1 > 7 && column + 1 > 7)) {
-
-                    if (nextPLayer == 1 && line + 1 == piece.getX() && column + 1 == piece.getY() && piece.getColor() == 'X') {
-
-                        aux2 += 1;
-                        
-                    } else if (nextPLayer == 2 && line + 1 == piece.getX() && column + 1 == piece.getY() && piece.getColor() == 'O') {
-
-                        aux2 += 1;
-
-                    }
-                    
-                } else if ((line + 1 == piece.getX() && column - 1 == piece.getY()) || (line + 1 > 7 && column - 1 < 0)) {
-
-                    if (nextPLayer == 1 && line + 1 == piece.getX() && column - 1 == piece.getY() && piece.getColor() == 'X') {
-
-                        aux2 += 1;
-                        
-                    } else if (nextPLayer == 2 && line + 1 == piece.getX() && column - 1 == piece.getY() && piece.getColor() == 'O') {
-
-                        aux2 += 1;
-
-                    } 
-
-                } else if ((line - 1 == piece.getX() && column -1 == piece.getY()) || (line - 1 < 0 && column - 1 < 0)) {
-
-                    if (nextPLayer == 1 && line - 1 == piece.getX() && column - 1 == piece.getY() && piece.getColor() == 'X') {
-
-                        aux2 += 1;
-                        
-                    } else if (nextPLayer == 2 && line - 1 == piece.getX() && column - 1 == piece.getY() && piece.getColor() == 'O') {
-
-                        aux2 += 1;
-
-                    } 
-
-                } else if ((line - 1 == piece.getX() && column + 1 == piece.getY()) || (line - 1 < 0 && column + 1 > 7)) {
-
-                    if (nextPLayer == 1 && line - 1 == piece.getX() && column + 1 == piece.getY() && piece.getColor() == 'X') {
-
-                        aux2 += 1;
-                        
-                    } else if (nextPLayer == 2 && line - 1 == piece.getX() && column + 1 == piece.getY() && piece.getColor() == 'O') {
-
-                        aux2 += 1;
-
-                    }
-
-                }
-
-                
-
-            }
-            
-            System.out.println(aux2);
-
-            if (aux2 > 3) {
-
-                System.out.println("\n\nInvalid position, try again!");
+                System.out.println("\n\nInvalid input, try again!");
 
                 continue outer;
+
+            }
+
+            if (nextPlayer == 1) {
+
+                selection = new Pieces('X', line, column);
+
+            } else if (nextPlayer == 2) {
+
+                selection = new Pieces('O', line, column);
 
             } else {
 
-                for (Pieces piece : pieces) {
+                System.out.println("\n\nError, please try again!");
 
-                    if (piece.getX() == line && piece.getY() == column) {
+                continue outer;
 
-                        aux = piece.getColor();
+            }
 
-                        piece.setColor('S');
 
-                        boardPrint.PrintBoard(pieces);
+            for (Pieces piece: pieces) {
 
-                        piece.setColor(aux);
+                if (piece.getX() == selection.getX() && piece.getY() == selection.getY() && piece.getColor() == selection.getColor()) {
 
-                        break outer;
+                    aux2 += 1;
+    
+                }
+
+            }
+
+            if (aux2 < 1) {
+
+                System.out.println("\n\nInvalid input, try again!");
+
+                continue outer;
+
+            }
+
+            aux2 = 0;
+
+            for (int x = 0; x < 7; x ++) {
+
+                for (int y = 0 ; y < 7; y ++) {
+
+                    if ((int) Math.abs(line - x) == 1 && (int) Math.abs(column - y) == 1) {
+
+                        aux2 += 1;
+
+                        possibles = new Possibles(x, y);
+
+                        possibleList.add(possibles);
 
                     }
 
                 }
 
-                System.out.println("\n\nInvalid position, try again!");
+            }
+
+            for (Possibles option : possibleList) {
+
+                for (Pieces piece: pieces) {
+
+                    if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() == selection.getColor() && !possibleListAux.contains(option)) {
+
+                        aux2 -= 1;
+
+                        possibleListAux.add(option);
+
+                    } else if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() != selection.getColor() && !possibleListAux.contains(option)) {
+
+                        if (piece.getX() > option.getX() && piece.getY() > option.getY() && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
+
+                            aux3 = 0;
+
+                            for (Pieces piece2: pieces) {
+
+                                if (piece2.getX() == piece.getX() + 1 && piece2.getY() == piece.getY() + 1) {
+                
+                                    aux3 += 1;
+                    
+                                }
+                
+                            }
+                
+                            if (aux3 > 0) {
+                
+                                aux2 -= 1;
+
+                                possibleListAux.add(option);
+                
+                            }  else {
+
+                                possibles = new Possibles(piece.getX() + 1, piece.getY() + 1);
+
+                                possibleList.add(possibles);
+
+                            }
+
+                        } else if (piece.getX() < option.getX() && piece.getY() < option.getY() && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
+
+                            aux3 = 0;
+
+                            for (Pieces piece2: pieces) {
+
+                                if (piece2.getX() == piece.getX() - 1 && piece2.getY() == piece.getY() - 1) {
+                
+                                    aux3 += 1;
+                    
+                                }
+                
+                            }
+                
+                            if (aux3 > 0) {
+                
+                                aux2 -= 1;
+
+                                possibleListAux.add(option);
+                
+                            } else {
+
+                                possibles = new Possibles(piece.getX() - 1, piece.getY() - 1);
+
+                                possibleList.add(possibles);
+
+                            }
+
+                        } else if (piece.getX() > option.getX() && piece.getY() < option.getY() && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
+
+                            aux3 = 0;
+
+                            for (Pieces piece2: pieces) {
+
+                                if (piece2.getX() == piece.getX() + 1 && piece2.getY() == piece.getY() - 1) {
+                
+                                    aux3 += 1;
+                    
+                                }
+                
+                            }
+                
+                            if (aux3 > 0) {
+                
+                                aux2 -= 1;
+
+                                possibleListAux.add(option);
+                
+                            }  else {
+
+                                possibles = new Possibles(piece.getX() + 1, piece.getY() - 1);
+
+                                possibleList.add(possibles);
+
+                            }
+
+                        } else if (piece.getX() < option.getX() && piece.getY() > option.getY() && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
+
+                            aux3 = 0;
+
+                            for (Pieces piece2: pieces) {
+
+                                if (piece2.getX() == piece.getX() - 1 && piece2.getY() == piece.getY() + 1) {
+                
+                                    aux3 += 1;
+                    
+                                }
+                
+                            }
+                
+                            if (aux3 > 0) {
+                
+                                aux2 -= 1;
+
+                                possibleListAux.add(option);
+                
+                            } else {
+
+                                possibles = new Possibles(piece.getX() - 1, piece.getY() + 1);
+
+                                possibleList.add(possibles);
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            System.out.println("\n\nYou have " + aux2 + " options to move your piece!");
+
+            if (aux2 == 0) {
+
+                System.out.println("\n\nError, please try again!");
 
                 continue outer;
+
+            } else { 
+
+                break outer;
 
             }
 
         }
 
-        System.out.println("\n\nNow, select the line and the column where you want to move the piece:");
+        System.out.println("\n\nNow, select the line and the column of where to move your piece: ");
 
         outer: while (true) {
-
-            newLine = 0;
-
-            newColumn = 0;
 
             line2 = input.nextInt();
 
             column2 = input.nextInt();
 
-            diff = Math.abs( (line + column) - (line2 + column2) );
+            for (Possibles option : possibleListAux) {
 
-            if (diff % 2 != 0 && diff != 0) {
+                if (option.getX() == line2 && option.getY() == column2) {
 
-                System.out.println("\n\nInvalid position, try again!");
+                    System.out.println("\n\nInvalid inputtt, try again!");
 
-                continue outer;
-
-            }
-
-            if (diff > 4) {
-
-                System.out.println("\n\nInvalid position, try again!");
-
-                continue outer;
-
-            }
-
-            if ((diff == 2) || ((int) Math.abs(line - line2) == 1 && (int) Math.abs(column - column2) == 1)) {
-
-                System.out.println("\n\nhi\n\n");
-
-                for (Pieces piece : pieces) {
-
-                    if (piece.getX() == line2 && piece.getY() == column2) {
-
-                        System.out.println("\n\nInvalid positionnnn, try again!");
-
-                        continue outer;
-
-                    }
+                    continue outer;
 
                 }
 
-                for (Pieces piece: pieces) {
+            }
 
-                    if (piece.getX() == line && piece.getY() == column) {
+            for (Possibles option : possibleList) {
 
-                        piece.setX(line2);
+                if (option.getX() == line2 && option.getY() == column2) {
 
-                        piece.setY(column2);
+                    if ((int) Math.abs(line - line2) == 1 && (int) Math.abs(column - column2) == 1) {
 
-                        break outer;
-                        
-                    }
+                        for (Pieces piece: pieces) {
 
-                }
+                            if (piece.getX() == line && piece.getY() == column) {
 
-
-            } else {
-
-                if ((int) Math.abs(line - line2) == (int) Math.abs(column - column2)) {
-
-                    for (Pieces piece: pieces) {
-
-                        if (piece.getX() == line2 && piece.getY() == column2) {
-
-                            System.out.println("\n\nInvalid position, try again!");
-
-                            continue outer;
-                            
-                        }
-
-                    }
-
-                    for (Pieces piece: pieces) {
-
-                        if (piece.getX() == line && piece.getY() == column) {
-    
-                            piece.setX(line2);
-    
-                            piece.setY(column2);
-    
-                            break;
-                            
-                        }
-    
-                    }
-
-                    if (line < line2) {
-
-                        newLine = line + 1;
-
-                    }
-
-                    if (line2 < line) {
-
-                        newLine = line2 + 1;
-
-                    }
-
-                    if (column < column2) {
-
-                        newColumn = column + 1;
-
-                    }
-
-                    if (column2 < column) {
-
-                        newColumn = column2 + 1;
-
-                    }
-
-
-                    for (Pieces piece: pieces) {
-
-                        if (piece.getX() == newLine && piece.getY() == newColumn) {
-
-                            if (nextPLayer == 1 && piece.getColor() == 'O') {
-
-                                pieces.remove(piece);
+                                piece.setX(line2);
+                                piece.setY(column2);
 
                                 break outer;
-
-                            } else if (nextPLayer == 2 && piece.getColor() == 'X') {
-
-                                pieces.remove(piece);
-
-                                break outer;
-
-                            } else {
-
-                                System.out.println("\n\nInvalid position, try again!");
-
-                                continue outer;
 
                             }
 
+                        }
 
+                    } else if ((int) Math.abs(line - line2) == 2 && (int) Math.abs(column - column2) == 2) {
+
+                        lineAux = -1;
+
+                        columnAux = -1;
+
+                        if (line2 > line) {
+
+                            lineAux = line + 1;
 
                         }
-    
-                    }
 
+                        if (line > line2) {
+
+                            lineAux = line2 + 1;
+
+                        }
+
+                        if (column > column2) {
+
+                            columnAux = column2 + 1;
+
+                        }
+
+                        if (column2 > column) {
+
+                            columnAux = column + 1;
+
+                        }
+
+                        for (Pieces piece: pieces) {
+
+                            if (piece.getX() == lineAux && piece.getY() == columnAux) {
+
+                                pieces.remove(piece);
+
+                            }
+
+                            if (piece.getX() == line && piece.getY() == column) {
+
+                                piece.setX(line2);
+                                piece.setY(column2);
+
+                                break outer;
+
+                            }
+
+                        }
+
+
+                    }
 
                 }
 
-
             }
 
-            System.out.println("\n\nInvalid position, try again!");
+            System.out.println("\n\nInvalid input, try again!");
 
             continue outer;
-
 
         }
 
