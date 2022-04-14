@@ -1,7 +1,6 @@
 package br.com.up.main;
 
 import java.util.ArrayList;
-
 import br.com.up.board.Board;
 import br.com.up.board.BoardPrint;
 import br.com.up.pieces.Pieces;

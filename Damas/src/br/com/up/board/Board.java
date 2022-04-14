@@ -22,6 +22,8 @@ public class Board {
 
         ArrayList<Possibles> possibleListAux = new ArrayList<Possibles>();
 
+        ArrayList<Possibles> possibleListAux2 = new ArrayList<Possibles>();
+
         Pieces selection;
 
         // varibal for the class
@@ -29,7 +31,8 @@ public class Board {
         char aux;
         int newLine;
         int newColumn;
-        int aux2, aux3;
+        int aux2;
+        int aux3;
         int diff;
         int line, column, line2, column2, lineAux, columnAux;
 
@@ -108,19 +111,23 @@ public class Board {
 
             }
 
+            possibleListAux2 = possibleList;
+
             for (Possibles option : possibleList) {
 
-                for (Pieces piece: pieces) {
+                System.out.println(option);
 
-                    if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() == selection.getColor() && !possibleListAux.contains(option)) {
+                for (Pieces piece : pieces) {
+
+                    if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() == selection.getColor() && possibleListAux.contains(option) == false) {
 
                         aux2 -= 1;
 
                         possibleListAux.add(option);
 
-                    } else if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() != selection.getColor() && !possibleListAux.contains(option)) {
+                    } else if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() != selection.getColor() && possibleListAux.contains(option) == false) {
 
-                        if (piece.getX() > option.getX() && piece.getY() > option.getY() && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
+                        if ((piece.getX() + 1 > option.getX() && piece.getY() + 1 > option.getY()) && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
 
                             aux3 = 0;
 
@@ -142,13 +149,15 @@ public class Board {
                 
                             }  else {
 
-                                possibles = new Possibles(piece.getX() + 1, piece.getY() + 1);
+                                possibles = new Possibles((piece.getX() + 1), (piece.getY() + 1));
 
-                                possibleList.add(possibles);
+                                possibleListAux2.add(possibles);
 
                             }
 
-                        } else if (piece.getX() < option.getX() && piece.getY() < option.getY() && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
+                            //System.out.println("\n\nhi");
+
+                        } else if ((piece.getX() - 1 < option.getX() && piece.getY() - 1 < option.getY()) && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
 
                             aux3 = 0;
 
@@ -172,11 +181,11 @@ public class Board {
 
                                 possibles = new Possibles(piece.getX() - 1, piece.getY() - 1);
 
-                                possibleList.add(possibles);
+                                possibleListAux2.add(possibles);
 
                             }
 
-                        } else if (piece.getX() > option.getX() && piece.getY() < option.getY() && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
+                        } else if ((piece.getX() + 1 > option.getX() && piece.getY() - 1 < option.getY()) && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
 
                             aux3 = 0;
 
@@ -200,11 +209,11 @@ public class Board {
 
                                 possibles = new Possibles(piece.getX() + 1, piece.getY() - 1);
 
-                                possibleList.add(possibles);
+                                possibleListAux2.add(possibles);
 
                             }
 
-                        } else if (piece.getX() < option.getX() && piece.getY() > option.getY() && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
+                        } else if ((piece.getX() - 1 < option.getX() && piece.getY() + 1 > option.getY()) && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
 
                             aux3 = 0;
 
@@ -228,7 +237,7 @@ public class Board {
 
                                 possibles = new Possibles(piece.getX() - 1, piece.getY() + 1);
 
-                                possibleList.add(possibles);
+                                possibleListAux2.add(possibles);
 
                             }
 
@@ -240,7 +249,9 @@ public class Board {
 
             }
 
-            System.out.println("\n\nYou have " + aux2 + " options to move your piece!");
+            System.out.println("\n\nPossible moves: " + aux2);
+
+            possibleList = possibleListAux2;
 
             if (aux2 == 0) {
 
@@ -249,6 +260,22 @@ public class Board {
                 continue outer;
 
             } else { 
+
+                for (Pieces piece : pieces) {
+
+                    if (piece.getX() == line && piece.getY() == column && piece.getColor() == selection.getColor()) {
+
+                        aux = piece.getColor();
+
+                        piece.setColor('S');
+
+                        boardPrint.PrintBoard(pieces);
+
+                        piece.setColor(aux);
+
+                    }
+
+                }
 
                 break outer;
 
@@ -296,6 +323,8 @@ public class Board {
                         }
 
                     } else if ((int) Math.abs(line - line2) == 2 && (int) Math.abs(column - column2) == 2) {
+
+                        System.out.println("\n\nhi");
 
                         lineAux = -1;
 
@@ -351,7 +380,7 @@ public class Board {
 
             }
 
-            System.out.println("\n\nInvalid input, try again!");
+            System.out.println("\n\nInvalidddd input, try again!");
 
             continue outer;
 
