@@ -21,10 +21,10 @@ public class Main {
 
     BoardPrint boardPrint = new BoardPrint();
 
-
     // welcome message and generating the initial pieces
 
     Welcome();
+
     GeneratePieces(pieces);
 
     // main loop of the game
@@ -128,9 +128,13 @@ public class Main {
               pieces.add(new_piece);
 
             }
+
           }
+
         }
+
       }
+
     }
 
     return pieces;

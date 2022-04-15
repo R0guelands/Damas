@@ -1,7 +1,6 @@
 package br.com.up.board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import br.com.up.pieces.Pieces;
@@ -31,11 +30,8 @@ public class Board {
         // varibal for the class
 
         char aux;
-        int newLine;
-        int newColumn;
         int aux2;
         int aux3;
-        int diff;
         int line, column, line2, column2, lineAux, columnAux;
 
         // main logic
@@ -152,8 +148,6 @@ public class Board {
                                 possibleListAux2.add(possibles);
 
                             }
-
-                            //System.out.println("\n\nhi");
 
                         } else if ((piece.getX() - 1 < selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
 
@@ -387,7 +381,7 @@ public class Board {
 
             }
 
-            System.out.println("\n\nInvalidddd input, try again!");
+            System.out.println("\n\nInvalid input, try again!");
 
             continue outer;
 
