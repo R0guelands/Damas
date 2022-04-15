@@ -121,7 +121,7 @@ public class Board {
 
                     } else if (piece.getX() == option.getX() && piece.getY() == option.getY() && piece.getColor() != selection.getColor() && possibleListAux.contains(option) == false) {
 
-                        if ((piece.getX() > selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() + 1 < 7 || piece.getY() + 1 < 7)) {
+                        if ((piece.getX() > selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() + 1 <= 7 && piece.getY() + 1 <= 7)) {
 
                             aux3 = 0;
 
@@ -149,7 +149,7 @@ public class Board {
 
                             }
 
-                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() - 1 > 0 || piece.getY() - 1 > 0)) {
+                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() - 1 >= 0 && piece.getY() - 1 >= 0)) {
 
                             aux3 = 0;
 
@@ -177,7 +177,7 @@ public class Board {
 
                             }
 
-                        } else if ((piece.getX() + 1 > selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() + 1 < 7 || piece.getY() - 1 > 0)) {
+                        } else if ((piece.getX() + 1 > selection.getX() && piece.getY() - 1 < selection.getY()) && (piece.getX() + 1 <= 7 && piece.getY() - 1 >= 0)) {
 
                             aux3 = 0;
 
@@ -205,7 +205,7 @@ public class Board {
 
                             }
 
-                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() - 1 > 0 || piece.getY() + 1 < 7)) {
+                        } else if ((piece.getX() - 1 < selection.getX() && piece.getY() + 1 > selection.getY()) && (piece.getX() - 1 >= 0 && piece.getY() + 1 <= 7)) {
 
                             aux3 = 0;
 
