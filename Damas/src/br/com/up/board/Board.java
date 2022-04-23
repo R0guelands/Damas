@@ -19,18 +19,31 @@ public class Board {
 
         ArrayList<Possibles> possibleList = new ArrayList<>();
 
-        Pieces selection;
-
         // varibal for the class
 
-        char aux;
-        int aux2;
-        int aux3;
         int line, column, line2, column2, lineAux, columnAux;
 
         // main logic
 
         System.out.println("\n\nSelect the line and the column of the piece you want to move:");
+
+        outer: while (true) {
+
+            line = input.nextInt();
+
+            column = input.nextInt();
+
+            if (line < 0 || line > 7 || column < 0 || column > 7) {
+
+                System.out.println("\n\nInvalid position, try again:");
+
+                continue;
+
+            }
+
+            
+
+        }
 
     }
 
