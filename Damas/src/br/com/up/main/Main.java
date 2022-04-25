@@ -3,7 +3,7 @@ package br.com.up.main;
 import java.util.ArrayList;
 import br.com.up.board.Board;
 import br.com.up.board.BoardPrint;
-import br.com.up.pieces.Pieces;
+import br.com.up.pieces.Checker;
 
 public class Main {
 
@@ -11,11 +11,11 @@ public class Main {
 
     // variables for the class
 
-    int nextPlayer = 2;
+    int nextPlayer = 1;
 
     int rounds = 0;
 
-    ArrayList<Pieces> pieces = new ArrayList<>(); // the game is stored in here
+    ArrayList<Checker> pieces = new ArrayList<>(); // the game is stored in here
 
     Board board = new Board();
 
@@ -29,21 +29,29 @@ public class Main {
 
     // main loop of the game
 
-    while (true) {
+    outer: while (true) {
 
-      System.out.printf("------------%d------------\n", rounds);
+      System.out.printf("----------------------%d----------------------\n", rounds);
 
       Score(pieces);
+
+      if (board.Black(pieces) == 12 || board.White(pieces) == 12) {
+
+        System.out.println("Você venceu!! Parabéns!");
+
+        break outer;
+
+      }
 
       nextPlayer = NextPlayer(nextPlayer);
 
       if (nextPlayer == 1) {
 
-        System.out.println("\n\nPlayer 1 (X), it's your turn!");
+        System.out.println("\n\nPlayer 1 (X), é sua vez!");
 
       } else {
 
-        System.out.println("\n\nPlayer 2 (O), it's your turn!");
+        System.out.println("\n\nPlayer 2 (O), é sua vez!");
 
       }
 
@@ -73,27 +81,27 @@ public class Main {
 
   }
 
-  private static void Score(ArrayList<Pieces> pieces) {
+  private static void Score(ArrayList<Checker> pieces) {
 
     Board board = new Board();
 
-    System.out.printf("\n\nScore: Black -> %d | White -> %d\n\n", board.Black(pieces), board.White(pieces));
+    System.out.printf("\n\nScore: Brancas -> %d | Pretas -> %d\n\n", board.Black(pieces), board.White(pieces));
 
   }
 
   private static void Welcome() {
 
-    System.out.println("Welcome to Checkers!\n");
-    System.out.println("In this game, you should choose your color beforehand.");
-    System.out.println("The next player (color) will be displayed every time, as well as a score!\n");
-    System.out.println("Have fun! The winner is set when only one color is remaining\n\n");
+    System.out.println("Bem vindo ao jogo da velha!\n");
+    System.out.println("Neste jogo, os jogadores devem escolher sua cor antes de começar.");
+    System.out.println("o próximo jogador (cor) será exibido sempre acima\n");
+    System.out.println("Divirtam-se!\n\n");
 
   }
 
-  private static ArrayList<Pieces> GeneratePieces(ArrayList<Pieces> pieces) {
+  private static ArrayList<Checker> GeneratePieces(ArrayList<Checker> pieces) {
 
     char color;
-    Pieces new_piece;
+    Checker new_piece;
 
     for (int x = 0; x <= 7; x++) {
 
@@ -115,7 +123,7 @@ public class Main {
 
             if (y % 2 == 0) {
 
-              new_piece = new Pieces(color, x, y);
+              new_piece = new Checker(color, x, y, 0);
               pieces.add(new_piece);
 
             }
@@ -124,7 +132,7 @@ public class Main {
 
             if (y % 2 != 0) {
 
-              new_piece = new Pieces(color, x, y);
+              new_piece = new Checker(color, x, y, 0);
               pieces.add(new_piece);
 
             }
