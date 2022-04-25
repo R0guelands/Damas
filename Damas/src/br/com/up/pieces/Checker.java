@@ -1,6 +1,8 @@
 package br.com.up.pieces;
 
 public class Checker extends Pieces {
+
+    // the Checker class is used to crate a piece with a "dama" verification
     
     private int dama;
 

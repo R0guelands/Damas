@@ -3,12 +3,16 @@ package br.com.up.board;
 import java.util.ArrayList;
 
 import br.com.up.pieces.Checker;
-import br.com.up.pieces.Pieces;
 
 public class BoardPrint {
 
+    // defines the color patterns for the checker printing
+
     public static final String ANSI_RESET = "\u001B[0m";
+
     public static final String ANSI_GREEN = "\u001B[32m";
+
+    // prints the board
 
     public void PrintBoard(ArrayList<Checker> pieces) {
 

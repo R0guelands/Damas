@@ -18,17 +18,18 @@ public class Board {
 
         ArrayList<Possibles> possibles = new ArrayList<>();
 
-        // varibal for the class
+        // variables
 
-        int line, column, line2, column2;
+        int line, column, line2, column2; // the coordinates of the piece and the
+                                          // destination
 
-        int cont;
+        int cont; // auxiliary variable
 
-        char color;
+        char color; // the color of the piece - is used to show the selected piece - auxiliary variable
 
         Checker selection = new Checker('A', 10, 10, 10);
 
-        // main logic
+        // selects the piece to move
 
         System.out.println("\n\nSelecione a linha e a coluna da peça que deseja mover:");
 
@@ -132,6 +133,8 @@ public class Board {
 
         }
 
+        // selects the place where to move the piece + moves it
+
         System.out.println("Selecione para onde deseja mover a peça selecionada:");
 
         outer: while (true) {
@@ -174,7 +177,7 @@ public class Board {
 
                 if (piece.getX() == 0 && piece.getY() == y && piece.getColor() == 'O') {
 
-                    System.out.println("\n\nParabéns, uma dama foi formada!! Ela será exibida em VERDE");
+                    System.out.println("\n--------------------------------------------\nParabéns, uma dama foi formada!! Ela será exibida em VERDE\n");
 
                     piece.setDama(1);
 
@@ -190,7 +193,7 @@ public class Board {
 
                 if (piece.getX() == 7 && piece.getY() == y && piece.getColor() == 'X') {
 
-                    System.out.println("\n\nParabéns, uma dama foi formada!! Ela será exibida em VERDE");
+                    System.out.println("\n--------------------------------------------\nParabéns, uma dama foi formada!! Ela será exibida em VERDE\n");
 
                     piece.setDama(1);
 
@@ -204,25 +207,27 @@ public class Board {
 
     }
 
+    // moves a piece and "eat" the ones in the way
+
     private ArrayList<Checker> PieceEater(int line, int column, int line2, int column2, ArrayList<Checker> pieces) {
 
         int m, pieceXx, pieceYy, a, b, h, a2, b2, h2;
 
         ArrayList<Checker> pieces2 = new ArrayList<>();
 
-        m = (column2 - column) / (line2 - line);
+        m = (column2 - column) / (line2 - line); // slope
 
-        a = (int) Math.abs(line - line2);
+        a = (int) Math.abs(line - line2); // distance between the two points
 
-        b = (int) Math.abs(column - column2);
+        b = (int) Math.abs(column - column2); // distance between the two points
 
-        h = (a * a) + (b * b);
+        h = (a * a) + (b * b); // hipotenuse
 
-        a2 = 0;
+        a2 = 0; // first side of the triangle
 
-        b2 = 0;
+        b2 = 0; // second side of the triangle
 
-        // Y - y1 = m (X - x1)
+        // Y - y1 = m (X - x1) 
 
         for (Checker piece : pieces) {
 
@@ -271,9 +276,11 @@ public class Board {
 
     }
 
+    // validates if the move is valid
+
     private boolean MovesValidator(ArrayList<Possibles> possibles, int line2, int column2) {
 
-        int count = 0;
+        int count = 0; // counts the number of valid moves
 
         for (Possibles possible : possibles) {
 
@@ -299,13 +306,15 @@ public class Board {
 
     }
 
+    // returns all the possible moves for a normal piece
+
     private ArrayList<Possibles> MovesNormal(Checker selection, ArrayList<Checker> pieces) {
 
         ArrayList<Possibles> possibles = new ArrayList<>();
 
         Possibles possibleMove;
 
-        int count, count2;
+        int count, count2; 
 
         for (int x = 0; x < 8; x++) {
 
@@ -457,14 +466,18 @@ public class Board {
 
     }
 
+    // returns all the possible moves for a checker 
+
     private ArrayList<Possibles> MovesChecker(Checker selection, ArrayList<Checker> pieces) {
 
         ArrayList<Possibles> possibles = new ArrayList<>();
 
         Possibles possibleMove;
 
-        int count;
+        int count; 
+
         int x = 0;
+
         int y = 0;
 
         x = selection.getX() + 1;
@@ -625,6 +638,8 @@ public class Board {
 
     }
 
+    // returns the black pieces counting
+
     public int Black(ArrayList<Checker> pieces) {
 
         int black = 12;
@@ -642,6 +657,8 @@ public class Board {
         return black;
 
     }
+
+    // returns the white pieces counting
 
     public int White(ArrayList<Checker> pieces) {
 

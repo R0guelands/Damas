@@ -9,11 +9,13 @@ public class Main {
 
   public static void main(String[] args) {
 
-    // variables for the class
+    // variables
 
-    int nextPlayer = 1;
+    int nextPlayer = 1; // 1 for white, 0 for black
 
-    int rounds = 0;
+    int rounds = 0; // rounds counter
+
+    // initializing systems
 
     ArrayList<Checker> pieces = new ArrayList<>(); // the game is stored in here
 
@@ -31,9 +33,11 @@ public class Main {
 
     outer: while (true) {
 
-      System.out.printf("----------------------%d----------------------\n", rounds);
+      System.out.printf("\n----------------------%d----------------------\n", rounds);
 
       Score(pieces);
+
+      // validates a winner
 
       if (board.Black(pieces) == 12 || board.White(pieces) == 12) {
 
@@ -65,6 +69,8 @@ public class Main {
 
   }
 
+  // determines the next player
+
   public static int NextPlayer(int nextPlayer) {
 
     if (nextPlayer % 2 == 0) {
@@ -81,6 +87,8 @@ public class Main {
 
   }
 
+  // returns the score of the game
+
   private static void Score(ArrayList<Checker> pieces) {
 
     Board board = new Board();
@@ -88,6 +96,8 @@ public class Main {
     System.out.printf("\n\nScore: Brancas -> %d | Pretas -> %d\n\n", board.Black(pieces), board.White(pieces));
 
   }
+
+  // welcome message
 
   private static void Welcome() {
 
@@ -97,6 +107,8 @@ public class Main {
     System.out.println("Divirtam-se!\n\n");
 
   }
+
+  // generates the pieces
 
   private static ArrayList<Checker> GeneratePieces(ArrayList<Checker> pieces) {
 
