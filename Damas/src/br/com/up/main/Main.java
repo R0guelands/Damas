@@ -33,10 +33,6 @@ public class Main {
 
     outer: while (true) {
 
-      System.out.printf("\n----------------------%d----------------------\n", rounds);
-
-      Score(pieces);
-
       // validates a winner
 
       if (board.Black(pieces) == 12 || board.White(pieces) == 12) {
@@ -46,6 +42,10 @@ public class Main {
         break outer;
 
       }
+
+      System.out.printf("\n----------------------%d----------------------\n", rounds);
+
+      Score(pieces);
 
       nextPlayer = NextPlayer(nextPlayer);
 
@@ -75,11 +75,11 @@ public class Main {
 
     if (nextPlayer % 2 == 0) {
 
-        nextPlayer = 1;
+      nextPlayer = 1;
 
     } else {
 
-        nextPlayer = 2;
+      nextPlayer = 2;
 
     }
 
