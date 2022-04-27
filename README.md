@@ -1,2 +1,2 @@
 # Damas
- Jogo de Damas para o Trabalho bimestral de Desenvolvimento de Software - Java
+ Jogo de Damas no terminal. Feito em Java com orientação a objeto, encapsulamento, herança e pacotes.
