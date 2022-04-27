@@ -12,6 +12,8 @@ public class BoardPrint {
 
     public static final String ANSI_GREEN = "\u001B[32m";
 
+    public static final String ANSI_CYAN = "\u001B[36m";
+
     // prints the board
 
     public void PrintBoard(ArrayList<Checker> pieces) {
@@ -20,14 +22,18 @@ public class BoardPrint {
 
         System.out.println("");
 
-        System.out.println("    0  1  2  3  4  5  6  7");
-        System.out.println("   ------------------------");
+        System.out.println(ANSI_CYAN + "     0   1   2   3   4   5   6   7" + ANSI_RESET);
 
         for (int x = 0; x <= 7; x++) {
 
-            System.out.printf("%d [", x);
+            System.out.println(ANSI_CYAN + "   ---------------------------------" + ANSI_RESET);
+
+            System.out.printf(ANSI_CYAN + "%d  " + ANSI_RESET, x);
 
             for (int y = 0; y <= 7; y++) {
+
+                
+                System.out.print(ANSI_CYAN + "|" + ANSI_RESET);
 
                 for (Checker piece : pieces) {
 
@@ -59,11 +65,11 @@ public class BoardPrint {
 
             }
 
-            System.out.println("]");
+            System.out.println(ANSI_CYAN + "| " + ANSI_RESET);
 
         }
 
-        System.out.println("   ------------------------");
+        System.out.println(ANSI_CYAN + "   ---------------------------------" + ANSI_RESET);
 
     }
 

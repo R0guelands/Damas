@@ -93,7 +93,7 @@ public class Main {
 
     Board board = new Board();
 
-    System.out.printf("\n\nScore: Brancas -> %d | Pretas -> %d\n\n", board.Black(pieces), board.White(pieces));
+    System.out.printf("\n\nScore: O -> %d | X -> %d\n\n", board.Black(pieces), board.White(pieces));
 
   }
 
