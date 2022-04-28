@@ -11,22 +11,18 @@ public class Main {
 
     // variables
 
-    int nextPlayer = 1; // 1 for white, 0 for black
-
+    int nextPlayer = 1; // 1 for O as first, 2 for X as first
     int rounds = 0; // rounds counter
 
     // initializing systems
 
     ArrayList<Checker> pieces = new ArrayList<>(); // the game is stored in here
-
     Board board = new Board();
-
     BoardPrint boardPrint = new BoardPrint();
 
     // welcome message and generating the initial pieces
 
     Welcome();
-
     GeneratePieces(pieces);
 
     // main loop of the game
@@ -36,33 +32,22 @@ public class Main {
       // validates a winner
 
       if (board.Black(pieces) == 12 || board.White(pieces) == 12) {
-
         System.out.println("Você venceu!! Parabéns!");
-
         break outer;
-
       }
 
       System.out.printf("\n----------------------%d----------------------\n", rounds);
-
       Score(pieces);
-
       nextPlayer = NextPlayer(nextPlayer);
 
       if (nextPlayer == 1) {
-
-        System.out.println("\n\nPlayer 1 (X), é sua vez!");
-
+        System.out.println("\n\nPlayer 1 (X, VERMELHO), é sua vez!");
       } else {
-
-        System.out.println("\n\nPlayer 2 (O), é sua vez!");
-
+        System.out.println("\n\nPlayer 2 (O, AMARELO), é sua vez!");
       }
 
       boardPrint.PrintBoard(pieces);
-
       pieces = board.BoardLogic(pieces, nextPlayer);
-
       rounds += 1;
 
     }
@@ -74,13 +59,9 @@ public class Main {
   public static int NextPlayer(int nextPlayer) {
 
     if (nextPlayer % 2 == 0) {
-
       nextPlayer = 1;
-
     } else {
-
       nextPlayer = 2;
-
     }
 
     return nextPlayer;
@@ -92,7 +73,6 @@ public class Main {
   private static void Score(ArrayList<Checker> pieces) {
 
     Board board = new Board();
-
     System.out.printf("\n\nScore: O -> %d | X -> %d\n\n", board.Black(pieces), board.White(pieces));
 
   }
@@ -101,10 +81,10 @@ public class Main {
 
   private static void Welcome() {
 
-    System.out.println("Bem vindo ao jogo da velha!\n");
+    System.out.println("\n\nBem vindo ao jogo da velha!\n");
     System.out.println("Neste jogo, os jogadores devem escolher sua cor antes de começar.");
     System.out.println("o próximo jogador (cor) será exibido sempre acima\n");
-    System.out.println("Divirtam-se!\n\n");
+    System.out.println("Divirtam-se!\n");
 
   }
 
@@ -116,45 +96,26 @@ public class Main {
     Checker new_piece;
 
     for (int x = 0; x <= 7; x++) {
-
       if (x < 3) {
-
         color = 'X';
-
       } else {
-
         color = 'O';
-
       }
-
       if (x < 3 | x > 4) {
-
         for (int y = 0; y <= 7; y++) {
-
           if (x % 2 == 0) {
-
             if (y % 2 == 0) {
-
               new_piece = new Checker(color, x, y, 0);
               pieces.add(new_piece);
-
             }
-
           } else {
-
             if (y % 2 != 0) {
-
               new_piece = new Checker(color, x, y, 0);
               pieces.add(new_piece);
-
             }
-
           }
-
         }
-
       }
-
     }
 
     return pieces;

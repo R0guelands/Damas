@@ -6,10 +6,8 @@ public class Possibles {
     int y;
 
     public Possibles(int x, int y) {
-
         this.x = x;
         this.y = y;
-
     }
 
     public int getX() {
